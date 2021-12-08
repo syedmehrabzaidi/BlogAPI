@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.fa {
+  font-size: 50px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fa:hover {
+  color: darkblue;
+}
+</style>
+<script>
+function myFunction(x) {
+  x.classList.add("fa-thumbs-up");
+  x.classList.remove("fa-thumbs-down");
+}
+</script>
+<hr style="display: block; margin-before: 0.5em; margin-after: 0.5em; margin-start: auto;
+ margin-end: auto; overflow: hidden; border-style: inset; border-width: 10px;"
+    ></hr>
+
+<div class="post-entry">
+    <h2> {{ post.title }}</h2>
+<hr style="  border-style: solid; border-width: 3px;"
+    ></hr>
+<br>
+    <p>Author: <i>{{ post.author|cut:"@gmail.com" }}</i></p>
+<button class="btn_count" type="submit"><b>{{ follower_count }}</b>
+        Followers
+</button>
+
+<button class="btn_count" type="submit"><b>{{ following_count }}</b> Followings</button>
+    <p>{{ post.body }}</p>
+
+
+    <a href="{% url 'pdf-wk' post.pk %}">PDF WKHTML</a><br>
+
+
+
+    <!-- LIKES -->
+{% if user.is_authenticated %}
+  <form action="{% url 'blogpost_like' post.id %}" method="POST">
+	{% csrf_token %}
+
+	{% if post_is_liked %}
+            <button type="submit" name="blogpost_id" value="{{object.id}}" onclick="myFunction(this)" class="fa fa-thumbs-down" ></button>
+
+<!--	<button type="submit" name="blogpost_id" value="{{object.id}}" >Unlike</button>-->
+	{% else %}
+            <button type="submit" name="blogpost_id" value="{{object.id}}" onclick="myFunction(this)" class="fa fa-thumbs-up" ></button>
+
+<!--	<button type="submit" name="blogpost_id" value="{{object.id}}" >Like</button>-->
+	{% endif %}
+  </form>
+
+{% endif %}
+<strong class="text-secondary">{{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+<br>
+
+{% if post.image %}
+    <img src="{{post.image.url}}" />
+
+    {% endif %}
+</div>
+
+{% if user == post.author %}
+{% else %}
+            {% if follow %}
+<form action="{% url 'profiles:follow-unfollow-view' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="profile_pk" value='{{ post.author }}'>
+    <button class="btn1" type="submit">UNFOLLOW</button>
+</form>
+{% else %}
+ <form action="{% url 'profiles:follow-unfollow-view'%}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="profile_pk" value='{{ post.author }}'>
+    <button class="btn1" type="submit">FOLLOW</button>
+     </form>
+{% endif %}
+
+</div>
+
+
+{% endif %}
+
+ {% if user == post.author %}
+<a href="{% url 'post_edit' post.pk %}">+ Edit Blog Post</a>
+<p><a href="{% url 'post_delete' post.pk %}">+ Delete Blog Post</a></p>
+{% endif %}
+
+<div>
+<h3>Comments</h3>
+
+<ul>
+{% for comment in post.comments.all %}
+   <i style=" font-style: italic; font-size: small;
+    color: #000000b3;
+    font-style: italic;"> <b>{{ comment.author|cut:'@gmail.com' }}</b> said <b>{{ comment.created_on|timesince }} ago</b></i>
+<li>{{ comment.comments }} </li><br>
+
+{% endfor %}
+</ul>
+
+ <a href="{% url 'post_comment' post.pk %}">+ Your Comment</a>
+
+</div>
+
+
+
+{% endblock content %}

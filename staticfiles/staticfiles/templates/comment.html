@@ -1,0 +1,14 @@
+<!{% extends 'base.html' %}
+{% block content %}
+
+
+
+<form action="" method="post" id="comment_form">{% csrf_token %}
+        <div>{{ form.as_p }}</div>
+<!--  <textarea rows="2" cols="40" form="comment_form" name="txt_comment" placeholder="Enter Your Comment here...">-->
+<!--</textarea>-->
+  <input type="submit">
+</form>
+
+
+ {% endblock content %}

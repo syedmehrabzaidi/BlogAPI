@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>temp.html</h1>
+ <img src="/home/mehrab/blogapi_change bd final (custom model)/media/images/p.png" />
+<img src="media/images/p2.png" />
+
+
+<form action="{% url 'profiles:follow-unfollow-view' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="profile_pk" value=''>
+    <button class="btn1" type="submit">UNFOLLOW</button>
+</form>
+
+ <form action="{% url 'profiles:follow-unfollow-view'%}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="profile_pk" value=''>
+    <button class="btn1" type="submit">FOLLOW</button>
+     </form>
+
+<a href="">+ Edit Blog Post</a>
+<p><a href="">+ Delete Blog Post</a></p>
+<p>loop</p>
+ {% for post in object_list %}
+
+    <img src="{{post.image.url}}" />
+{{ post.title }}
+ {{ post.body }}
+
+ {% endfor%}
+</body>
+</html>

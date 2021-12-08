@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+   <body>
+      <table border = "1" cellpadding = "5" cellspacing = "5">
+          <th>Following</th>
+
+        {% for following in  user.following.all %}
+         <tr>
+           <td>{{ following }}</td>
+         </tr>
+{% endfor %}
+      </table>
+
+   {% endblock content %}
