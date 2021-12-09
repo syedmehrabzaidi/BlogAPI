@@ -1,12 +1,21 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+import rest_framework_filters as filters
+# from django_filters import rest_framework as filters
 
 from blog.models import Post
 from profiles.models import ProfileCustomUser
 from .serializers import PostSerializer, UserSerializer
 
 
+class ManagerPosts(filters.FilterSet):
+    class Meta:
+        model = Post
+        fields = {'title': ['contains']}
+
+
 class PostListCreateApiView(generics.ListCreateAPIView):
+    filter_class = ManagerPosts
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 

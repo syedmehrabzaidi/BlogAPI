@@ -63,7 +63,8 @@
 }
 </style>
 {% if user.is_authenticated %}
-<a href="api/v1/post/">api |</a>
+<a href="api/v1/post/?title__contains=">api |</a>
 <a href="auth/jwt/create/">generate token |</a>
 <a href="auth/jwt/refresh/">refresh</a>{% endif %}
+<a href="">OTher |</a>
 {% endblock content %}
