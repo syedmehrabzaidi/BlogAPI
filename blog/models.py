@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.contrib.postgres.fields import JSONField
 
 from blog_project.settings import AUTH_USER_MODEL
 
@@ -45,3 +46,12 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.comments
+
+
+class ApiLogs(models.Model):
+    url = models.CharField(default="", max_length=10000)
+    method = models.CharField(default="", max_length=10)
+    host = models.CharField(default="", max_length=100)
+    query_parameters = JSONField(default=dict())
+    username = models.CharField(default="", max_length=100)
+    time = models.DateTimeField(auto_now_add=True)
