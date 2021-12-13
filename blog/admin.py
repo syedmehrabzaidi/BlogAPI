@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comments
+from .models import Post, Comments, ApiLogs
 
 
 class CommentsInline(admin.TabularInline):
@@ -14,3 +14,4 @@ class CommentsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Post, CommentsAdmin)
+admin.site.register(ApiLogs)

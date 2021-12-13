@@ -72,7 +72,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'blog_project.apimiddleware.APiLogMiddleware'
+    'blog_project.apimiddleware.APiLogMiddleware'
 ]
 
 ROOT_URLCONF = 'blog_project.urls'
